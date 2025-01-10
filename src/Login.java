@@ -22,12 +22,14 @@ public class Login {
 
             Connection conn = null;
             PreparedStatement ps = null;
-
         try{
-                conn = DriverManager.getConnection(url, user, password);
-                System.out.println("Se a conectado correctamente a la base de datos");
-                String sql = "insert into usuarios (username, password) values (?,?)";
-                ps = conn.prepareStatement(sql);
+            conn = DriverManager.getConnection(url, user, password);
+            System.out.println("Se a conectado correctamente a la base de datos");String sql = "insert into usuarios (username, password) values (?,?)";
+            ps = conn.prepareStatement(sql);
+
+            usertextField1.setText(user);
+            passwordField1.setText(password);
+
         }catch(Exception e){
             e.printStackTrace();
         }
