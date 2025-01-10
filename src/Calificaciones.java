@@ -26,25 +26,7 @@ public class Calificaciones {
         validarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try{
-                    Connection conn = DriverManager.getConnection(url, user, password);
 
-                    String query = "select * from estudiantes";
-                    PreparedStatement ps = conn.prepareStatement(query);
-                    ResultSet rs = ps.executeQuery(query);
-                    while (rs.next()) {
-                        
-                    }
-
-                    }
-
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-
-
-            }
-        });
         registrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,6 +36,9 @@ public class Calificaciones {
 
                 try{
                     Connection conn = DriverManager.getConnection(url, user, password);
+
+                    int insertarFilas = ps.executeUpdate();
+                    System.out.println("insertarFilas: " + insertarFilas);
 
                     String sql = "insert into estudiantes values cedula, nombre,calificacion1, calificacion2, calificacion3, calificacion4, calificacion5 = ?,?,?,?,?,?,?";
                     PreparedStatement ps = conn.prepareStatement(sql);
@@ -81,5 +66,8 @@ public class Calificaciones {
                 }
             }
         });
+    }
+
+    public static void setVisible(boolean b) {
     }
 }

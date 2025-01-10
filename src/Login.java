@@ -10,64 +10,41 @@ public class Login {
     private JPasswordField passwordField1;
     private JButton validarButton;
 
-    public Login() {
-        /*
-        Connection conn = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;*/
+    public Login() throws SQLException {
 
         validarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                String usuario = usertextField1.getText();
-                String password = String.valueOf(passwordField1.getPassword());
-
-                user = getAuthenticatedUser(username, password);
-
-                if (user != null) {
-                    dispose();
-                    Productos productos = new Productos(parent);
-                    productos.setVisible(true);
-                } else {
-                    JOptionPane.showMessageDialog(Login.this,
-                            "Usuario o Password incorrecto",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-
-                }
             }
-        }
-        public Username user;
-        private User getAuthenticatedUser(String usuario, String password){
-            User user = null;
+            String url = "jdbc:mysql://localhost:3306/gestion_calificiones";
+            String user = "root";
+            String password = "123456";
 
-            String URL = "jdbc:mysql://localhost:3306/productos";
-            String USER = "root";
-            String PASSWORD = "";
-            try {
-                Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
 
-                String sql = "SELECT * FROM USUARIO WHERE username =? AND password =? ";
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, usuario);
-                preparedStatement.setString(2, password);
-                ResultSet resultSet = preparedStatement.executeQuery();
+            Connection conn = null;
+            PreparedStatement ps = null;
 
-                if (resultSet.next()) {
-                    user = new User();
-                    user.setUsuario(resultSet.getString("username"));
-                }
-                preparedStatement.close();
-                resultSet.close();
-                connection.close();
+        try{
+                conn = DriverManager.getConnection(url, user, password);
+                System.out.println("Se a conectado correctamente a la base de datos");
+                String sql = "insert into usuarios (username, password) values (?,?)";
+                ps = conn.prepareStatement(sql);
 
-            } catch (Exception e) {
+            }
+        catch(Exception e){
+
                 e.printStackTrace();
-            }
-            return user;
+
+            }finally {
+                try {
+                    if (conn != null) {
+                        conn.close();
+                    }
+                    if (ps != null) {
+                        conn.close();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
         }
-    }
-
-
-}
