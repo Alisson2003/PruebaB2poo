@@ -17,8 +17,6 @@ public class Calificaciones {
 
 
     public Calificaciones() {
-
-        public void actionPerformed(ActionEvent e) {
             String url = "jdbc:mysql://localhost:3306/gestion_calificaciones";
             String user = "root";
             String password = "123456";
@@ -27,47 +25,45 @@ public class Calificaciones {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-        registrarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String url = "jdbc:mysql://localhost:3306/gestion_calificaciones";
-                String user = "root";
-                String password = "123456";
+                registrarButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String url = "jdbc:mysql://localhost:3306/gestion_calificaciones";
+                        String user = "root";
+                        String password = "123456";
 
-                try{
-                    Connection conn = DriverManager.getConnection(url, user, password);
+                        try {
+                            Connection conn = DriverManager.getConnection(url, user, password);
 
-                    int insertarFilas = ps.executeUpdate();
-                    System.out.println("insertarFilas: " + insertarFilas);
+                            String sql = "insert into estudiantes values cedula, nombre,calificacion1, calificacion2, calificacion3, calificacion4, calificacion5 = ?,?,?,?,?,?,?";
+                            PreparedStatement ps = conn.prepareStatement(sql);
+                            ps.setString(1, cedulatextField1.getText());
+                            ps.setString(2, nombretextField1.getText());
+                            ps.setString(1, calificacion1.getText());
+                            ps.setString(2, calificacion2.getText());
+                            ps.setString(3, calificacion3.getText());
+                            ps.setString(4, calificacion4.getText());
+                            ps.setString(5, calificacion5.getText());
+                            ResultSet rs = ps.executeQuery();
+                            rs.next();
 
-                    String sql = "insert into estudiantes values cedula, nombre,calificacion1, calificacion2, calificacion3, calificacion4, calificacion5 = ?,?,?,?,?,?,?";
-                    PreparedStatement ps = conn.prepareStatement(sql);
-                    ps.setString(1, cedulatextField1.getText());
-                    ps.setString(2, nombretextField1.getText());
-                    ps.setString(1, calificacion1.getText());
-                    ps.setString(2, calificacion2.getText());
-                    ps.setString(3, calificacion3.getText());
-                    ps.setString(4, calificacion4.getText());
-                    ps.setString(5, calificacion5.getText());
-                    ResultSet rs = ps.executeQuery();
-                    rs.next();
+                            int insertar = ps.executeUpdate();
+                            System.out.println("insertarDatos: " + insertar);
+
+                            JFrame frame = new JFrame();
+                            frame.setContentPane(new Historial_calificaciones().mainPanel3);
+                            frame.setContentPane(frame.getContentPane());
+                            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            frame.setSize(800, 600);
+                            frame.setVisible(true);
 
 
-                    JFrame frame = new JFrame();
-                    frame.setContentPane(new Historial_calificaciones().mainPanel3);
-                    frame.setContentPane(frame.getContentPane());
-                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    frame.setSize(800, 600);
-                    frame.setVisible(true);
-
-
-                }catch (Exception ex){
-                    ex.printStackTrace();
-                }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
             }
-        });
-    }
-
-    public static void setVisible(boolean b) {
+        }
     }
 }
