@@ -20,7 +20,6 @@ public class Login {
             String user = "root";
             String password = "123456";
 
-
             Connection conn = null;
             PreparedStatement ps = null;
 
@@ -29,22 +28,10 @@ public class Login {
                 System.out.println("Se a conectado correctamente a la base de datos");
                 String sql = "insert into usuarios (username, password) values (?,?)";
                 ps = conn.prepareStatement(sql);
-
-            }
-        catch(Exception e){
-
-                e.printStackTrace();
-
-            }finally {
-                try {
-                    if (conn != null) {
-                        conn.close();
-                    }
-                    if (ps != null) {
-                        conn.close();
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
+        }catch(Exception e){
+            e.printStackTrace();
         }
+        }
+
+    }
+}
